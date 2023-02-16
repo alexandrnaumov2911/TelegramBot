@@ -1,11 +1,12 @@
-def summ(a: str, b:str):
-    return eval(f'{a} + {b}')
+def summ(a: float, b:float):
+    return a + b
 
-def sub(a: str, b: str):
-    return eval(f'{a} - {b}')
+def sub(a: float, b: float):
+    return a - b
 
-def div(a: str, b: str):
-    return eval(f'{a} / {b}')
+def div(a: float, b: float):
+    return a / b
 
-def mult(a: str, b: str):
-    return eval(f'{a} * {b}')
+def mult(a: float, b: float):
+    return a * b
+
