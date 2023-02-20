@@ -1,32 +1,31 @@
-from utils import summ, sub, div, mult, validation_operation, validation_integer
+from utils import summ, sub, div, mult, validation_2, validation_operation
 answer = ''
 while answer != '0':
 
     number1 = input('Введите первое число: ').strip()
-    if validation_integer(number1) is False:
+    if validation_2(number1) is False:
         print('Введите число корректно')
-        number1 = input('Введите первое число : ').strip()
+        continue
 
     operation = input('Операция? (+, -, *, /): ').strip()
     if validation_operation(operation) is False:
         print('Введите операцию корректно')
-        operation = input('Операция? (+, -, *, /): ').strip()
+        continue
 
 
     number2 = input('Введите второе число : ').strip()
-    if validation_integer(number2) is False:
+    if validation_2(number2) is False:
         print('Введите число корректно')
-        number2 = input('Введите второе число : ').strip()
+        continue
 
+    dict_operators = {
+        '+' : summ,
+        '-' : sub,
+        '/' : div,
+        '*' : mult
+    }
 
-    if operation == '+':
-        print(summ(float(number1), float(number2)))
-    elif operation == '-':
-        print(sub(float(number1), float(number2)))
-    elif operation == '/':
-        print(div(float(number1), float(number2)))
-    elif operation == '*':
-        print(mult(float(number1), float(number2)))
+    print(dict_operators.get(operation)(number1, number2))
 
     answer = input('Хотите продолжить? (1 - Да, 0 - Нет) - ').strip()
     while answer != '0' and answer != '1':

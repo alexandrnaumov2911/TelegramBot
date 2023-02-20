@@ -29,7 +29,6 @@ def validation_integer(value: str):
             return False
 
 def validation_operation(operation: str):
-
-    if operation == '+' or operation == '-' or operation == '/' or operation == '*':
+    if operation in ['+', '-', '/', '*']:
         return True
     return False
