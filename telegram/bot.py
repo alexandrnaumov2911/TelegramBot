@@ -28,8 +28,8 @@ dp = Dispatcher(bot)
 
 @dp.message_handler()
 async def answer_message(msg: types.Message):
-    send = await bot.send_message(msg.from_user.id, msg.text)
-    await bot.edit_message_text(f'{answer.get(randrange(1, 10, 1))}', send.chat.id, send.message_id)
+    await bot.send_message(msg.from_user.id, answer.get(randrange(1, 10, 1)))
+
 
 
 if __name__ == '__main__':
