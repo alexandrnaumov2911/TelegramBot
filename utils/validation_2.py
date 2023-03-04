@@ -13,3 +13,4 @@ def validation_2(value: str):
         except Exception as e:
             print(f'Упало {e}')
     return False
+
