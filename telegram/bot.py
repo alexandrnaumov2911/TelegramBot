@@ -1,9 +1,11 @@
 # https://gitlab.com/alexandrnaumov2911/linteh_28
 
 
-import random
+"""
+Реализовать запрос на отправку копии сообщения пользователю, который отправил его боту.
+"""
+
 from config import TOKEN
-from expressions import answer
 
 from aiogram import Bot, types
 from aiogram.dispatcher import Dispatcher
@@ -17,7 +19,7 @@ dp = Dispatcher(bot)
 
 @dp.message_handler()
 async def answer_message(msg: types.Message):
-    await bot.send_message(msg.from_user.id, random.choice(answer))
+    await msg.reply(msg.text)
 
 
 
