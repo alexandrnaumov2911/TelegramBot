@@ -1,27 +1,56 @@
 # https://gitlab.com/alexandrnaumov2911/linteh_28
-
-
 """
-Реализовать запрос на отправку копии сообщения пользователю, который отправил его боту.
+Реализовать эхо бота с использованием Telegram bot api. Бот должен не только принимать сообщения, но и изображения.
 """
+import time
+
+import requests
 
 from config import TOKEN
 
-from aiogram import Bot, types
-from aiogram.dispatcher import Dispatcher
-from aiogram.utils import executor
+BASE_URL = f'https://api.telegram.org/bot{TOKEN}'
 
 
 
-bot = Bot(token = TOKEN)
-dp = Dispatcher(bot)
+def pulling():
+    count_message = 0
+    while True:
+        time.sleep(1)
+        response = requests.get(f'{BASE_URL}/getUpdates').json()
+        if count_message != len(response['result']):
+            count_message = len(response['result'])
+            msg = response['result'][-1]['message']
 
 
-@dp.message_handler()
-async def answer_message(msg: types.Message):
-    await msg.reply(msg.text)
+            if msg.get('text'):
+                text = msg['text']
+                chat_id = msg['chat']['id']
+                params = {
+               'chat_id' : chat_id,
+               'text' : text,
+            }
+                requests.post(f'{BASE_URL}/sendMessage', params=params)
 
 
+            elif msg.get('photo') and msg.get('caption') is None:
+                chat_id = msg['chat']['id']
+                photo = msg['photo'][-1]['file_id']
+                params = {
+                    'chat_id': chat_id,
+                    'photo' : photo,
+                }
+                requests.post(f'{BASE_URL}/sendPhoto', params=params)
+            elif msg.get('photo') and msg.get('caption'):
 
-if __name__ == '__main__':
-    executor.start_polling(dp)
+
+                chat_id = msg['chat']['id']
+                photo = msg['photo'][-1]['file_id']
+                caption = msg['caption']
+                params = {
+                    'chat_id': chat_id,
+                    'photo': photo,
+                    'caption': caption
+                }
+                requests.post(f'{BASE_URL}/sendPhoto', params=params)
+
+pulling()
