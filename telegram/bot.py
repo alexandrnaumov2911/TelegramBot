@@ -20,11 +20,11 @@ def pulling():
         if count_message != len(response['result']):
             count_message = len(response['result'])
             msg = response['result'][-1]['message']
+            chat_id = msg['chat']['id']
 
 
             if msg.get('text'):
                 text = msg['text']
-                chat_id = msg['chat']['id']
                 params = {
                'chat_id' : chat_id,
                'text' : text,
@@ -33,17 +33,17 @@ def pulling():
 
 
             elif msg.get('photo') and msg.get('caption') is None:
-                chat_id = msg['chat']['id']
+
                 photo = msg['photo'][-1]['file_id']
                 params = {
                     'chat_id': chat_id,
                     'photo' : photo,
                 }
                 requests.post(f'{BASE_URL}/sendPhoto', params=params)
+
+
             elif msg.get('photo') and msg.get('caption'):
 
-
-                chat_id = msg['chat']['id']
                 photo = msg['photo'][-1]['file_id']
                 caption = msg['caption']
                 params = {
