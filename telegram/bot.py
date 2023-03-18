@@ -17,7 +17,7 @@ async def start(msg: types.Message):
 
 @dp.message_handler(commands= ['help'])
 async def start(msg: types.Message):
-    await msg.answer('Я умею только повторять сообщения :(')
+    await msg.answer(msg.chat.id)
 
 @dp.message_handler()
 async def answer(msg: types.Message):
@@ -27,4 +27,7 @@ async def answer(msg: types.Message):
 if __name__ == '__main__':
     from aiogram import executor
 
-    executor.start_polling(dp, skip_updates = True)
+    executor.start_polling(
+        dispatcher = dp,
+        skip_updates = True
+    )
