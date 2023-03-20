@@ -1,3 +1,7 @@
+"""
+Реализовать эхо бота использующего webhook.
+"""
+
 import logging
 
 from aiogram import Bot, Dispatcher, types
@@ -25,20 +29,13 @@ async def on_shutdown(dp):
     await bot.delete_webhook()
     logging.info('Bye!')
 
-
 @dp.message_handler(commands=['start'])
-async def command_start(msg: types.Message):
-    return webhook.SendMessage(msg.chat.id, 'Добро пожаловать!')
+async def start_command(msg: types.Message):
+    return webhook.SendMessage(msg.chat.id, 'Привет, это эхо бот')
 
-
-@dp.message_handler(commands=['help'])
-async def command_help(msg: types.Message):
-    return webhook.SendMessage(msg.chat.id, 'Вы обратились к справке бота')
-
-
-@dp.message_handler(commands=['myID'])
-async def get_id_user(msg: types.Message):
-    return webhook.SendMessage(msg.chat.id, f'ID: <code>{msg.chat.id}</code>')
+@dp.message_handler()
+async def echo(msg: types.Message):
+    return webhook.SendMessage(msg.chat.id, msg.text)
 
 
 if __name__ == '__main__':
