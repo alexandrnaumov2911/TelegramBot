@@ -1,9 +1,14 @@
-from numba import njit
-
-@njit
-def max_sequence(arr):
-    if 0 in [1 if (arr[i] > 0) else 0 for i in arr]:
-        summa = [sum(arr[s:i+1]) for i in range (len(arr)) for s in range(len(arr))]
-        return max(summa)
-    return sum(arr)
-print(max_sequence([-2, 1, -3, 4, -1, 2, 1, -5, 4,]))
+def next_bigger(n):
+    list1 = []
+    n = str(n)
+    for i in range(len(n), 0, -1):
+        print(i)
+        start = n
+        end = start[i:]
+        print(end)
+        start = start[:i-2] + start[i-2:i+1][::-1]
+        print(start)
+    # if len(list1) != 0:
+    #     return min(list1)
+    # return -1
+print(next_bigger(2017))
