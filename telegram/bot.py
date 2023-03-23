@@ -1,33 +1,52 @@
-from config import TOKEN
+"""
+Реализовать эхо бота использующего webhook.
+"""
 
-from aiogram import Bot, types
-from aiogram.dispatcher import Dispatcher
 import logging
 
+from aiogram import Bot, Dispatcher, types
+from aiogram.contrib.middlewares.logging import LoggingMiddleware
+from aiogram.dispatcher import webhook
+
+from config import TOKEN, WEBHOOK_URL, WEBHOOK_PATH, WEBAPP_HOST, WEBAPP_PORT
+
 logging.basicConfig(level=logging.INFO)
-
-
-bot = Bot(token = TOKEN)
+bot = Bot(
+    token=TOKEN,
+    parse_mode='HTML',
+)
 dp = Dispatcher(bot)
+dp.middleware.setup(LoggingMiddleware())
 
 
-@dp.message_handler(commands= ['start'])
-async def start(msg: types.Message):
-    await msg.answer('Привет, это эхо бот')
+async def on_startup(dp):
+    logging.info('Setting webhook :D')
+    await bot.set_webhook(WEBHOOK_URL)
 
-@dp.message_handler(commands= ['help'])
-async def start(msg: types.Message):
-    await msg.answer(msg.chat.id)
+
+async def on_shutdown(dp):
+    logging.info('Shutting down..')
+    await bot.delete_webhook()
+    logging.info('Bye!')
+
+@dp.message_handler(commands=['start'])
+async def start_command(msg: types.Message):
+    return webhook.SendMessage(msg.chat.id, 'Привет, это эхо бот')
 
 @dp.message_handler()
-async def answer(msg: types.Message):
-    await bot.send_message(msg.chat.id, msg.text)
+async def echo(msg: types.Message):
+    return webhook.SendMessage(msg.chat.id, msg.text)
 
 
 if __name__ == '__main__':
     from aiogram import executor
 
-    executor.start_polling(
-        dispatcher = dp,
-        skip_updates = True
+    executor.start_webhook(
+        dispatcher=dp,
+        skip_updates=True,
+        on_startup=on_startup,
+        on_shutdown=on_shutdown,
+        webhook_path=WEBHOOK_PATH,
+        host=WEBAPP_HOST,
+        port=WEBAPP_PORT,
     )
