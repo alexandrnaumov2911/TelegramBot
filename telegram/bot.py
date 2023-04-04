@@ -1,46 +1,26 @@
 import logging
-import sqlite3
 
-from aiogram import Bot, Dispatcher, types
-from aiogram.contrib.middlewares.logging import LoggingMiddleware
+import config
+from loader import dp
+from middleware.custom import SomeMiddleware
 
-from config import TOKEN
+async def on_startup(dp):
+    logging.info('new start')
+    await dp.bot.set_my_commands(config.COMMANDS)
 
-
-logging.basicConfig(level=logging.INFO)
-bot = Bot(
-    token=TOKEN,
-)
-dp = Dispatcher(bot)
-dp.middleware.setup(LoggingMiddleware())
-
-@dp.message_handler(
-    content_types= types.ContentType.TEXT
-)
-async def echo(msg: types.Message):
-    with sqlite3.connect('database.db') as connection:
-        cur = connection.cursor()
-        user = cur.execute(f" SELECT * FROM user WHERE user_id={msg.from_user.id}").fetchone()
-        if not user:
-            logging.info(f'Создание нового пользователя: {msg.from_user.username} {msg.from_user.id}')
-
-            data = (msg.from_user.id, msg.chat.id, msg.from_user.username)
-            cur.execute(f"INSERT INTO user(user_id, chat_id, username) VALUES (?,?,?) ", data)
-            connection.commit()
-            await msg.answer('Вы добавлены в БД')
-        else:
-            await msg.answer('Вы уже в БД')
-    await msg.answer(msg.text)
-
+async def on_shotdown(dp):
+    logging.info('end start')
 
 if __name__ == '__main__':
     from aiogram import executor
-    from database import create_table
+    from utils.database import create_table
+    from handlers import *
 
     create_table()
-
+    dp.middleware.setup(SomeMiddleware())
     executor.start_polling(
-
         dispatcher=dp,
         skip_updates=True,
+        on_startup=on_startup,
+        on_shutdown=on_shotdown
     )
