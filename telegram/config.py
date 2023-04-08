@@ -1,18 +1,23 @@
 import os
 
-TOKEN = os.getenv("TOKEN")
-
+from aiogram import types
 
 ADMINS = (747184261,)
-NGROK = os.getenv("NGROK")
-
+TOKEN = os.getenv('TOKEN')
+NGROK = os.getenv('NGROK', '')
 
 WEBHOOK_PATH = ''
 WEBHOOK_URL = f'{NGROK}{WEBHOOK_PATH}'
+
 
 WEBAPP_HOST = '127.0.0.1'  # or ip
 WEBAPP_PORT = 8000
 
 if not TOKEN:
     exit('Error: no token provided')
+
+COMMANDS = [
+    types.BotCommand('start', 'Стартуем!'),
+    types.BotCommand('help', 'Что я могу?'),
+]
 

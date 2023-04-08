@@ -1,7 +1,7 @@
 import logging
 
 import config
-from loader import dp
+from telegram.loader import dp
 from middleware.custom import SomeMiddleware
 
 async def on_startup(dp):
