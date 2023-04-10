@@ -13,11 +13,12 @@ class SomeMiddleware(BaseMiddleware):
 
             cur.execute(
                 f"""
-                INSERT INTO user_message(user_id, message) VALUES (?,?)
-            """,
+                    INSERT INTO messages_from_users(user_id, chat_id, message) VALUES (?,?,?)
+                """,
                 (
                     message.from_user.id,
-                    message.text,
+                    message.chat.id,
+                    message.text
                 )
             )
-        conn.commit()
+            conn.commit()
