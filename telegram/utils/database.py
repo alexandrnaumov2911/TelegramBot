@@ -10,7 +10,15 @@ def create_table():
                    CREATE TABLE IF NOT EXISTS user(
                    user_id INT PRIMARY KEY, 
                    chat_id INT,
-                   message TEXT);   
+                   username TEXT);   
                """
+        )
+        cur.execute(
+            f""" 
+                    CREATE TABLE IF NOT EXISTS user_message(
+                    num INTEGER PRIMARY KEY AUTOINCREMENT,
+                    user_id INT,
+                    message TEXT);
+            """
         )
         connection.commit()
