@@ -20,4 +20,4 @@ class SomeMiddleware(BaseMiddleware):
                     message.text,
                 )
             )
-    #         conn.commit()
+        conn.commit()
