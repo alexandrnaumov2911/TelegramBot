@@ -6,5 +6,5 @@ from telegram.loader import dp
     content_types=types.ContentType.TEXT,
 )
 
-async def echo_text(msg: types.Message, ):
+async def echo_text(msg: types.Message):
     await msg.answer(msg.text)

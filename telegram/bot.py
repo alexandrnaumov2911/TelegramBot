@@ -23,7 +23,7 @@ async def on_shotdown(dp):
 if __name__ == '__main__':
     from aiogram import executor
     from utils.database import create_table
-    from handlers import *
+    from handlers import main_command, command_about, echo
 
     create_table()
     dp.middleware.setup(SomeMiddleware())
