@@ -18,6 +18,6 @@ if not TOKEN:
 
 COMMANDS = [
     types.BotCommand('start', 'Стартуем!'),
-    types.BotCommand('help', 'Что я могу?'),
+    types.BotCommand('about', 'О себе'),
 ]
 
