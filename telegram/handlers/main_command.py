@@ -14,20 +14,21 @@ async def command_start(msg: types.Message):
 
     with sqlite3.connect('database.db') as conn:
         cur = conn.cursor()
-        user_obj = cur.execute(f"""select user_id from user where user_id={user_id}""").fetchone()
+        user_obj = cur.execute(f"""select user_id from user where user_id = {user_id}""").fetchone()
 
         if not user_obj:
-            cur.execute(
-                f"""
-                        INSERT INTO user(user_id,chat_id, username) VALUES (?,?,?)
-                    """,
-                (
-                    user_id,
-                    chat_id,
-                    username,
-                )
-            )
+            cur.execute(f"""
+                            INSERT INTO user(user_id, chat_id, username) VALUES (?, ?, ?)
+                        """,
+                    (
+                        user_id,
+                        chat_id,
+                        username
+                    )
+                        )
             conn.commit()
             await msg.answer('Добро пожаловать!')
         else:
-            await msg.answer('Ну привет!')
+            await msg.answer('Снова здравствуй !')
+
+

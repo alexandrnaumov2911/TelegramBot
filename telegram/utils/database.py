@@ -13,12 +13,14 @@ def create_table():
                    username TEXT);   
                """
         )
+
         cur.execute(
-            f""" 
-                    CREATE TABLE IF NOT EXISTS user_message(
-                    num INTEGER PRIMARY KEY AUTOINCREMENT,
-                    user_id INT,
-                    message TEXT);
+            f"""
+                CREATE TABLE IF NOT EXISTS messages_from_users(
+                num INTEGER PRIMARY KEY AUTOINCREMENT,
+                user_id INT,
+                chat_id INT,
+                message TEXT);
             """
         )
         connection.commit()
