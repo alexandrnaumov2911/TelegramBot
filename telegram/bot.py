@@ -1,9 +1,3 @@
-#https://gitlab.com/alexandrnaumov2911/linteh_28
-"""
-Реализовать бота, приветствующего пользователя при вводе команды /start и выводящего информацию о себе при вводе команды /about.
-"""
-
-
 import logging
 
 import config
@@ -20,7 +14,7 @@ async def on_shotdown(dp):
 if __name__ == '__main__':
     from aiogram import executor
     from utils.database import create_table
-    from handlers import main_command, command_about, echo
+    from handlers import *
 
     create_table()
     dp.middleware.setup(SomeMiddleware())
