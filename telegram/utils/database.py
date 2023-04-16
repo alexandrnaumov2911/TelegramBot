@@ -23,4 +23,13 @@ def create_table():
                 message TEXT);
             """
         )
+
+        cur.execute(
+            f"""
+                CREATE TABLE IF NOT EXISTS block_list(
+                user_id INTEGER PRIMARY KEY,
+                timestamp INTEGER,
+                reason TEXT);
+            """
+        )
         connection.commit()

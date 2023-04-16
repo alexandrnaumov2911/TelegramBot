@@ -19,5 +19,6 @@ if not TOKEN:
 COMMANDS = [
     types.BotCommand('start', 'Стартуем!'),
     types.BotCommand('about', 'О себе'),
+    types.BotCommand('block', 'Для проверки чс, (/block ~user_id~ ~причина~)'),
 ]
 
