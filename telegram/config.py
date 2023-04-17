@@ -20,5 +20,6 @@ COMMANDS = [
     types.BotCommand('start', 'Стартуем!'),
     types.BotCommand('about', 'О себе'),
     types.BotCommand('block', 'Для проверки чс, (/block ~user_id~ ~причина~)'),
+    types.BotCommand('feedback', 'Оставить отзыв')
 ]
 

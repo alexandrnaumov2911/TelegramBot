@@ -32,4 +32,15 @@ def create_table():
                 reason TEXT);
             """
         )
+
+        cur.execute(
+            f"""
+                CREATE TABLE IF NOT EXISTS complaint_book(
+                user_id INT,
+                timestamp INT,
+                username TEXT,
+                reason TEXT);
+            """
+        )
+
         connection.commit()
