@@ -4,22 +4,23 @@ import sqlite3
 from aiogram import types
 from telegram.loader import dp
 
-from telegram.utils.keyboards.KeyboardAnswer import KeyboardAnswer
+from telegram.utils.keyboards.KeyboardAnswer import KeyboardClaim, KeyboardAnswer
 from aiogram.types import ReplyKeyboardRemove
 @dp.message_handler(commands=['feedback'])
 async def command_feedback(msg:types.Message):
     await msg.answer("""Рады что вы хотите оставить отзыв. Вам нравиться бот? Над вашей клавиатурой предложены кнопки для выбора""", reply_markup=KeyboardAnswer)
 
-@dp.message_handler(text = 'Да',)
-async def the_answer_is_yes(msg:types.Message):
-    await msg.answer(f"Спасибо! Мы рады, что вам всё нравиться", reply_markup=ReplyKeyboardRemove())
+@dp.callback_query_handler(text = 'Answer_Yes')
+async def inline_answer_yes(cb: types.CallbackQuery):
+    await cb.answer()
+    await cb.message.answer('Спасибо за ваш отзыв, мы рады, что вам всё нравиться')
 
-@dp.message_handler(text = 'Нет')
-async def the_answer_is_not(msg:types.Message):
-    await msg.answer(f"""Очень жаль:(, но если вы оставите причину, мы попробуем исправиться
-(оставьте причину в формате  --*Причина: ... *--)""", reply_markup=ReplyKeyboardRemove(), parse_mode="Markdown")
+@dp.callback_query_handler(text = 'Answer_No')
+async def inline_answer_no(cb: types.CallbackQuery):
+    await cb.answer()
+    await cb.message.answer("Очень жаль, но если вы оставите причину, мы попробуем исправиться", reply_markup= KeyboardClaim)
 
-@dp.message_handler(regexp=re.compile(r'^Причина:'))
+@dp.message_handler(regexp=re.compile(r'Жалоба:'))
 async def Reason(msg: types.Message):
     arg = msg.text.split(':')
     if len(arg) == 2:
