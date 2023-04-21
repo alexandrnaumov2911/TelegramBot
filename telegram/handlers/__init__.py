@@ -4,5 +4,7 @@ from . import main_command
 from . import help
 from . import command_about
 from . import moderate
+from . import command_feedback
+from . import command_location
 
 from . import echo

@@ -1,10 +1,9 @@
-from aiogram.types import KeyboardButton, ReplyKeyboardMarkup
+from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
-KeyboardAnswer = ReplyKeyboardMarkup(resize_keyboard=True)
+button_yes = InlineKeyboardButton('Да', callback_data='Answer_Yes')
+button_no = InlineKeyboardButton('Нет', callback_data='Answer_No')
 
-buttons = [
-    'Да',
-    'Нет'
-]
+KeyboardAnswer = InlineKeyboardMarkup().add(button_yes, button_no)
 
-KeyboardAnswer.add(*buttons)
+KeyboardClaim = InlineKeyboardMarkup()
+KeyboardClaim.insert(InlineKeyboardButton('Оставить отзыв', switch_inline_query_current_chat='Жалоба: '))
