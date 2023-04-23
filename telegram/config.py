@@ -22,5 +22,7 @@ COMMANDS = [
     types.BotCommand('block', 'Для проверки чс, (/block ~user_id~ ~причина~)'),
     types.BotCommand('feedback', 'Оставить отзыв'),
     types.BotCommand('location', 'Отправить локацию'),
+    types.BotCommand('favorite_film', 'Мой любимый фильм'),
+    types.BotCommand('multi_menu', 'Перейти в меню'),
 ]
 
