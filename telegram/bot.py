@@ -1,33 +1,26 @@
-from config import TOKEN
-
-from aiogram import Bot, types
-from aiogram.dispatcher import Dispatcher
 import logging
 
-logging.basicConfig(level=logging.INFO)
+import config
+from telegram.loader import dp
+from middleware.custom import SomeMiddleware
 
+async def on_startup(dp):
+    logging.info('new start')
+    await dp.bot.set_my_commands(config.COMMANDS)
 
-bot = Bot(token = TOKEN)
-dp = Dispatcher(bot)
-
-
-@dp.message_handler(commands= ['start'])
-async def start(msg: types.Message):
-    await msg.answer('Привет, это эхо бот')
-
-@dp.message_handler(commands= ['help'])
-async def start(msg: types.Message):
-    await msg.answer(msg.chat.id)
-
-@dp.message_handler()
-async def answer(msg: types.Message):
-    await bot.send_message(msg.chat.id, msg.text)
-
+async def on_shotdown(dp):
+    logging.info('end start')
 
 if __name__ == '__main__':
     from aiogram import executor
+    from utils.database import create_table
+    from handlers import dp
 
+    create_table()
+    dp.middleware.setup(SomeMiddleware())
     executor.start_polling(
-        dispatcher = dp,
-        skip_updates = True
+        dispatcher=dp,
+        skip_updates=True,
+        on_startup=on_startup,
+        on_shutdown=on_shotdown
     )
