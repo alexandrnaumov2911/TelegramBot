@@ -43,4 +43,13 @@ def create_table():
             """
         )
 
+        cur.execute(
+            f"""
+                CREATE TABLE IF NOT EXISTS polling_favorite_film(
+                user_id,
+                vote INTEGER check (vote in (0, 1)),
+                data TEXT);    
+            """
+        )
+
         connection.commit()

@@ -24,5 +24,6 @@ COMMANDS = [
     types.BotCommand('location', 'Отправить локацию'),
     types.BotCommand('favorite_film', 'Мой любимый фильм'),
     types.BotCommand('multi_menu', 'Перейти в меню'),
+    types.BotCommand('start_polling', 'Опрос по любимому жанру фильмов'),
 ]
 

@@ -8,5 +8,7 @@ from . import command_feedback
 from . import command_location
 from . import command_favorite_film
 from . import multi_level_menu
+from . import polling_favorite_film
+from . import currency_converter
 
 from . import echo
